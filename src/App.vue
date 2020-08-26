@@ -1,13 +1,20 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <AppBar />
+
+    <router-view />
   </div>
 </template>
 
+<script>
+import AppBar from "./views/AppBar";
+export default {
+  name: "App",
+  components: {
+    AppBar,
+  },
+};
+</script>
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
