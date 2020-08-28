@@ -25,11 +25,13 @@
 </template>
 
 <script>
-//import jwtDecode from "jwt-decode";
+import jwt_decode from "jwt-decode";
+
 export default {
   data() {
     const token = localStorage.usertoken;
-    const decoded = jwtDecode(token);
+    const decoded = jwt_decode(token);
+    console.log(decoded);
     return {
       first_name: decoded.identity.first_name,
       last_name: decoded.identity.last_name,

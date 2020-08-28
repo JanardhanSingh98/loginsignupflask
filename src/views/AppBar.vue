@@ -60,12 +60,16 @@ export default {
   methods: {
     logout() {
       localStorage.removeItem("usertoken");
+      console.log("tocken destoried");
+      this.$router.push("/");
+      window.location.reload();
     },
   },
 
   mounted() {
     EventBus.$on("logged-in", (status) => {
       this.auth = status;
+      console.log(this.auth);
     });
   },
 };
