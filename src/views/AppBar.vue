@@ -25,14 +25,14 @@
               to="/signup"
             >Signup</b-button>
             <b-button
-              v-if="auth=='loggedin'"
+              v-if="auth=='success'"
               size="sm"
               class="my-1 mx-1 my-sm-0"
               type="submit"
               to="/profile"
             >Profile</b-button>
             <b-button
-              v-if="auth=='loggedin'"
+              v-if="auth=='success'"
               size="sm"
               class="my-1 mx-1 my-sm-0"
               type="submit"
@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import EventBus from "./EventBus";
+import { EventBus } from "../event-bus";
 
 export default {
   data() {
@@ -60,14 +60,14 @@ export default {
   methods: {
     logout() {
       localStorage.removeItem("usertoken");
-      console.log("tocken destoried");
+      console.log("tocken destroyed");
       this.$router.push("/");
       window.location.reload();
     },
   },
 
   mounted() {
-    EventBus.$on("logged-in", (status) => {
+    EventBus.$on("loggedin", (status) => {
       this.auth = status;
       console.log(this.auth);
     });

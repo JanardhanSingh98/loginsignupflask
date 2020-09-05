@@ -37,7 +37,7 @@
 
 
 <script>
-import EventBus from "./EventBus";
+import { EventBus } from "../event-bus";
 
 export default {
   data() {
@@ -59,18 +59,19 @@ export default {
           password: this.password,
         })
         .then((response) => {
+          console.log(response.data);
           localStorage.setItem("usertoken", response.data);
           this.email = "";
           this.password = "";
           this.$router.push("/profile");
+          this.emitMethod();
         })
         .catch((error) => {
-          console.log(error + "errer hai");
+          console.log(error + "\nInvalid username and password");
         });
-      this.emitMethod();
     },
     emitMethod() {
-      EventBus.$emit("logged-in", "loggedin");
+      EventBus.$emit("loggedin", "success");
     },
   },
 };
