@@ -11,28 +11,28 @@
           <b-nav-form>
             <b-button size="sm" class="my-1 mx-1 my-sm-0" type="submit" to="/">Home</b-button>
             <b-button
-              v-if="auth==''"
+              v-if="!isLoggedIn"
               size="sm"
               class="my-1 mx-1 my-sm-0"
               type="submit"
               to="/login"
             >Login</b-button>
             <b-button
-              v-if="auth==''"
+              v-if="!isLoggedIn"
               size="sm"
               class="my-1 mx-1 my-sm-0"
               type="submit"
               to="/signup"
             >Signup</b-button>
             <b-button
-              v-if="auth=='success'"
+              v-if="isLoggedIn"
               size="sm"
               class="my-1 mx-1 my-sm-0"
               type="submit"
               to="/profile"
             >Profile</b-button>
             <b-button
-              v-if="auth=='success'"
+              v-if="isLoggedIn"
               size="sm"
               class="my-1 mx-1 my-sm-0"
               type="submit"
@@ -47,8 +47,6 @@
 </template>
 
 <script>
-import { EventBus } from "../event-bus";
-
 export default {
   data() {
     return {
@@ -57,20 +55,31 @@ export default {
     };
   },
 
-  methods: {
-    logout() {
-      localStorage.removeItem("usertoken");
-      console.log("tocken destroyed");
-      this.$router.push("/");
-      window.location.reload();
+  // created() {
+  //   this.$http.interceptors.response.use(undefined, function (err) {
+  //     return new Promise(function (resolve, reject) {
+  //       if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
+  //         this.$store.dispatch(logout);
+  //       }
+  //       throw err;
+  //     });
+  //   });
+  // },
+
+  computed: {
+    isLoggedIn() {
+      return this.$store.getters.isLoggedIn;
     },
   },
 
-  mounted() {
-    EventBus.$on("loggedin", (status) => {
-      this.auth = status;
-      console.log(this.auth);
-    });
+  methods: {
+    logout() {
+      this.$store.dispatch("logout").then(() => {
+        this.$router.push("/login");
+      });
+    },
   },
+
+  mounted() {},
 };
 </script>

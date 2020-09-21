@@ -4,7 +4,7 @@
       <mdb-col md="6" sm="8" lg="4">
         <mdb-card>
           <mdb-card-body class="mx-4">
-            <form v-on:submit.prevent="login">
+            <form @submit.prevent="login">
               <div class="text-center">
                 <h3 class="dark-grey-text mb-5">
                   <strong>LogIn</strong>
@@ -37,8 +37,6 @@
 
 
 <script>
-import { EventBus } from "../event-bus";
-
 export default {
   data() {
     return {
@@ -53,27 +51,16 @@ export default {
     },
 
     login() {
-      this.axios
-        .post("http://127.0.0.1:5000/users/login", {
-          email: this.email,
-          password: this.password,
-        })
-        .then((response) => {
-          console.log(response.data);
-          localStorage.setItem("usertoken", response.data);
-          this.email = "";
-          this.password = "";
-          this.$router.push("/profile");
-          this.emitMethod();
-        })
-        .catch((error) => {
-          console.log(error + "\nInvalid username and password");
-        });
-    },
-    emitMethod() {
-      EventBus.$emit("loggedin", "success");
+      let email = this.email;
+      let password = this.password;
+      this.$store
+        .dispatch("login", { email, password })
+        .then(() => this.$router.push("/profile"))
+        .catch((err) => console.log(err));
     },
   },
+
+  created: {},
 };
 </script>
 

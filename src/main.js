@@ -10,6 +10,11 @@ import router from './router'
 import * as mdbvue from 'mdbvue'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import Vuex from 'vuex'
+import store from './store'
+
+Vue.use(Vuex)
+
 
 Vue.use(VueAxios, axios)
 
@@ -21,6 +26,12 @@ Vue.config.productionTip = false
 
 new Vue({
   router,
+  store,
   render: h => h(App)
 }).$mount('#app')
 
+Vue.prototype.$http = axios;
+const token = localStorage.getItem('token')
+if (token) {
+  Vue.prototype.$http.defaults.headers.common['Authorization'] = token
+}

@@ -10,8 +10,8 @@
               </h3>
             </div>
             <div class="grey-text form-group">
-              <mdb-input v-model="first_name" label="First Name" group type="text" required />
-              <mdb-input v-model="last_name" label="Last Name" group type="text" required />
+              <mdb-input v-model="name" label="Name" group type="text" required />
+              <mdb-input v-model="mobile" label="mobile" group type="number" required />
               <mdb-input v-model="email" label="Your email" group type="email" required />
               <mdb-input v-model="password" label="Your password" required group type="password" />
             </div>
@@ -39,8 +39,8 @@
 export default {
   data() {
     return {
-      first_name: "",
-      last_name: "",
+      name: "",
+      mobile: "",
       email: "",
       password: "",
     };
@@ -48,21 +48,19 @@ export default {
 
   methods: {
     register() {
-      this.axios
-        .post("http://127.0.0.1:5000/users/register", {
-          first_name: this.first_name,
-          last_name: this.last_name,
-          email: this.email,
-          password: this.password,
-        })
-        .then((response) => {
-          console.log(response);
-          this.$router.push("/login");
-        })
-        .catch((error) => {
-          console.log(error);
+      let name = this.name;
+      let mobile = this.mobile;
+      let email = this.email;
+      let password = this.password;
+      this.$store
+        .dispatch("register", { name, mobile, email, password })
+        .then(() => this.$router.push("/login"))
+        .catch(() => {
+          // console.log(err);
+          console.log("email or phone already exists");
         });
     },
+
     route() {
       this.$router.push("/login");
     },
