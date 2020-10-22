@@ -10,17 +10,42 @@
               </h3>
             </div>
             <div class="grey-text form-group">
-              <mdb-input v-model="name" label="Name" group type="text" required />
-              <mdb-input v-model="mobile" label="mobile" group type="number" required />
-              <mdb-input v-model="email" label="Your email" group type="email" required />
-              <mdb-input v-model="password" label="Your password" required group type="password" />
+              <mdb-input
+                v-model="username"
+                label="Name"
+                group
+                type="text"
+                required
+              />
+              <mdb-input
+                v-model="mobile"
+                label="mobile"
+                group
+                type="number"
+                required
+              />
+              <mdb-input
+                v-model="email"
+                label="Your email"
+                group
+                type="email"
+                required
+              />
+              <mdb-input
+                v-model="password"
+                label="Your password"
+                required
+                group
+                type="password"
+              />
             </div>
             <div class="text-center mb-3 form-group">
               <mdb-btn
                 type="submit"
                 gradient="blue"
                 class="btn-lg btn-primary btn-block z-depth-1a"
-              >Register</mdb-btn>
+                >Register</mdb-btn
+              >
             </div>
           </form>
         </mdb-card-body>
@@ -39,7 +64,7 @@
 export default {
   data() {
     return {
-      name: "",
+      username: "",
       mobile: "",
       email: "",
       password: "",
@@ -48,16 +73,16 @@ export default {
 
   methods: {
     register() {
-      let name = this.name;
+      let username = this.username;
       let mobile = this.mobile;
       let email = this.email;
       let password = this.password;
       this.$store
-        .dispatch("register", { name, mobile, email, password })
+        .dispatch("register", { username, mobile, email, password })
         .then(() => this.$router.push("/login"))
         .catch(() => {
           // console.log(err);
-          console.log("email or phone already exists");
+          console.log("err");
         });
     },
 
